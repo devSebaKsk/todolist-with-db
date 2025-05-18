@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react'
-import {NoteCard} from '../components/Notecard/NoteCard'
-import {NoteCardCreation} from '../components/NoteCardForm/NoteCardForm'
+import {NoteCard} from '../../components/Notecard/NoteCard'
+import {NoteCardCreation} from '../../components/NoteCardForm/NoteCardForm'
+import './notes.scss'
 
 export const Notes = () => {
     const [notes, setNotes] = useState([])
