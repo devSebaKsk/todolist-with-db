@@ -37,6 +37,16 @@ def handle_get_notes():
 
     return jsonify([note.serialize() for note in notes]), 200
 
+@api.route('/notes/<int:id>', methods=['DELETE'])
+def handle_delete_note(id):
+    note = Note.query.get(id)
+    if not note:
+        return jsonify({"msg": "Nota no encontrada"}), 404
+
+    db.session.delete(note)
+    db.session.commit()
+    return jsonify({"message": "Nota eliminada"}), 200
+
 
 @api.route('/notes', methods=['POST'])
 def handle_post_note():
