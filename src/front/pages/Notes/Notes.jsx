@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react'
 import {NoteCard} from '../../components/Notecard/NoteCard'
 import {NoteCardCreation} from '../../components/NoteCardForm/NoteCardForm'
 import './notes.scss'
+import { NewNote } from '../../components/NewNote/NewNote'
 
 export const Notes = () => {
     const [notes, setNotes] = useState([])
@@ -28,6 +29,7 @@ export const Notes = () => {
                 <NoteCard key={note.id} note={note} />
             ))}
             <NoteCardCreation />
+            <NewNote/>
             
         </div>
     </div>

@@ -1,0 +1,24 @@
+.wrapper-newnote{
+    background-color: rgb(210, 210, 210);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    min-width: 20rem;
+    min-height: 18rem;
+    border-radius: 10px;
+    .newnote{
+        h2{
+            color: grey;
+            margin-bottom: 2rem;
+        }
+        button{
+        text-decoration: none;
+        font-size: large;
+        background-color: transparent;
+        border: none;
+        color: black;
+        cursor: pointer;
+        }
+    }
+}
