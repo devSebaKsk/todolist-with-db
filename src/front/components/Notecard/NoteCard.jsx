@@ -1,14 +1,14 @@
 import React , {useState, useEffect} from 'react'
 import './notecard.scss'
 
-export const NoteCard = () => {
+export const NoteCard = ({note}) => {
   const [title, setTitle] = useState('')
   const [body, setBody] = useState('')
   const [date, setDate] = useState('')
 
   const handleGetNote = async () => {
     try{
-      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/notes/1`)
+      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/notes/${note.id}`)
       const data = await response.json()
       setTitle(data.title)
       setBody(data.body)
