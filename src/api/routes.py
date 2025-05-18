@@ -29,6 +29,14 @@ def handle_get_note(id):
 
     return jsonify(note.serialize()), 200
 
+@api.route('/notes', methods=['GET'])
+def handle_get_notes():
+    notes = Note.query.all()
+    if not notes:
+        return jsonify({"msg": "No hay notas"}), 404
+
+    return jsonify([note.serialize() for note in notes]), 200
+
 
 @api.route('/notes', methods=['POST'])
 def handle_post_note():
