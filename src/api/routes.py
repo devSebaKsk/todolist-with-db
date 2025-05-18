@@ -41,3 +41,16 @@ def handle_post_note():
     db.session.commit()
     return jsonify({"message": "Nota creada"}), 201
 
+
+@api.route('/notes/<int:id>', methods=['PUT'])
+def handle_put_note(id):
+    data = request.get_json(silent=True)
+    note = Note.query.get(id)
+    if not note:
+        return jsonify({"msg": "Nota no encontrada"}), 404
+
+    note.title = data.get("title")
+    note.body = data.get("body")
+    db.session.commit()
+    return jsonify({"message": "Nota actualizada"}), 200
+
