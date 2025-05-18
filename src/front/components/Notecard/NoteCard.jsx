@@ -18,6 +18,49 @@ export const NoteCard = () => {
       console.error('Error fetching note:', error)
     }
   }
+
+  const handleEditNote = () => {
+    const titleInput = document.querySelector('.card-header h2')
+    const bodyInput = document.querySelector('.card-content p')
+    const  saveButton = document.querySelector('.editButtons')
+    const editButton = document.querySelector('.pen-button')
+
+    if (saveButton) {
+      saveButton.style.display = 'block'
+    }
+    if (editButton) {
+      editButton.style.display = 'none'
+    }
+
+    titleInput.contentEditable = true
+    bodyInput.contentEditable = true
+  }
+
+  const handleChangeNote = async (id) => {
+      const note = {
+        title: title,
+        body: body
+      };
+      try {
+        const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/notes/${id}`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(note)
+        });
+        if (response.ok) {
+          console.log('Note updated successfully');
+        } else {
+          console.error('Error updating note');
+        }
+      } catch (error) {
+        console.error('Error updating note:', error);
+      }
+    }
+
+  
+
   useEffect(() => {
     handleGetNote()
   }, [])
@@ -35,7 +78,11 @@ export const NoteCard = () => {
           <p>Fecha: {date}</p>
         </div>
         <div>
-          <button><i className="fa-solid fa-pen"/></button>
+          <button className='pen-button'><i className="fa-solid fa-pen" onClick={handleEditNote}/></button>
+          <div className='editButtons' style={{display: 'none'}}>
+            <button onClick={() => handleChangeNote(1)}><i className="fa-solid fa-floppy-disk"/></button>
+            <button><i className="fa-solid fa-trash"/></button>
+          </div>
         </div>
       </div>
     </div>

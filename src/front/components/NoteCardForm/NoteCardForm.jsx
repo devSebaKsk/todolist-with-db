@@ -28,6 +28,9 @@ export const NoteCardCreation = () => {
         console.error('Error creating note:', error);
       }
     }
+
+
+    
   
 
 
