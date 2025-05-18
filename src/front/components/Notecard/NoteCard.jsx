@@ -22,7 +22,7 @@ export const NoteCard = () => {
   const handleEditNote = () => {
     const titleInput = document.querySelector('.card-header h2')
     const bodyInput = document.querySelector('.card-content p')
-    const  saveButton = document.querySelector('.editButtons')
+    const saveButton = document.querySelector('.editButtons')
     const editButton = document.querySelector('.pen-button')
 
     if (saveButton) {
@@ -34,6 +34,23 @@ export const NoteCard = () => {
 
     titleInput.contentEditable = true
     bodyInput.contentEditable = true
+  }
+
+  const handleCloseEdit = () => {
+    const titleInput = document.querySelector('.card-header h2')
+    const bodyInput = document.querySelector('.card-content p')
+    const saveButton = document.querySelector('.editButtons')
+    const editButton = document.querySelector('.pen-button')
+
+    if (saveButton) {
+      saveButton.style.display = 'none'
+    }
+    if (editButton) {
+      editButton.style.display = 'block'
+    }
+
+    titleInput.contentEditable = false
+    bodyInput.contentEditable = false
   }
 
   const handleChangeNote = async (id) => {
@@ -82,6 +99,7 @@ export const NoteCard = () => {
           <div className='editButtons' style={{display: 'none'}}>
             <button onClick={() => handleChangeNote(1)}><i className="fa-solid fa-floppy-disk"/></button>
             <button><i className="fa-solid fa-trash"/></button>
+            <button onClick={handleCloseEdit}><i className="fa-solid fa-xmark"/></button>
           </div>
         </div>
       </div>
