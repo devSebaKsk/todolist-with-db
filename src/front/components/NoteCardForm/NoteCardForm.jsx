@@ -2,18 +2,17 @@ import React, { useState } from 'react'
 import './notecardform.scss'
 
 export const NoteCardCreation = () => {
-  const {title, setTitle} = useState()
-  const {body, setBody} = useState()
+  const [title, setTitle] = useState("")
+  const [body, setBody] = useState("")
   const date = new Date().toLocaleDateString();
 
   const handleCreateNote = async () => {
     const note = {
       title: title,
-      body: body,
-      date: date
+      body: body
     };
       try {
-        const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/notes`, {
+        const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/notes`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
@@ -50,7 +49,7 @@ export const NoteCardCreation = () => {
           <p>Fecha: {date}</p>
         </div>
         <div>
-          <button onClick={handleCreateNote}><i className="fa-solid fa-plus"/></button>
+          <button type="button" onClick={handleCreateNote}><i className="fa-solid fa-plus"/></button>
         </div>
       </div>
       </form>
