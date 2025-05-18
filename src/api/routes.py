@@ -21,13 +21,13 @@ def handle_hello():
 
     return jsonify(response_body), 200
 
-@api.route('/notes/int:id', methods=['GET'])
+@api.route('/notes/<int:id>', methods=['GET'])
 def handle_get_note(id):
     note = Note.query.get(id)
     if not note:
         return jsonify({"msg": "Empresa no encontrada"}), 404
 
-    return jsonify(note), 200
+    return jsonify(note.serialize()), 200
 
 
 @api.route('/notes', methods=['POST'])
