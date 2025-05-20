@@ -1,0 +1,24 @@
+nav{
+    background-color: #ffffff;
+    color: rgb(101, 47, 235);
+
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+        span{
+            font-size: 1.5rem;
+            font-weight: bold;
+            padding-left: 2rem;
+        }
+        div{
+            padding-right: 2rem;
+            button{
+                background-color: transparent;
+                border: none;
+                color: rgb(101, 47, 235);
+                font-size: 1.5rem;
+                font-weight: bold;
+            }
+        }
+}
