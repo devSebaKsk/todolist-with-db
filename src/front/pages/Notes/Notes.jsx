@@ -35,7 +35,6 @@ export const Notes = () => {
 
   return (
     <div>
-        <h1>Notes</h1>
         <div className='notes-container'>
             {notes.map((note) => (
                 <NoteCard key={note.id} note={note} />

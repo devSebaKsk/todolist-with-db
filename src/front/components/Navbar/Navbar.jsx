@@ -8,6 +8,7 @@ export const Navbar = () => {
 				<div>
 					<button><i class="fa-solid fa-user"></i></button>
 				</div>
+
 		</nav>
 	);
 };
