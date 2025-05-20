@@ -1,13 +1,17 @@
-import React , {useState, useEffect} from 'react'
+import React, { useState, useEffect } from 'react'
 import './notecard.scss'
 
-export const NoteCard = ({note}) => {
+export const NoteCard = ({ note }) => {
   const [title, setTitle] = useState('')
   const [body, setBody] = useState('')
   const [date, setDate] = useState('')
+  const [toggle, setToggle] = useState({ display: 'none' })
+  const [toggleUser, setToggleUSer] = useState({ display: 'block' })
+  const [estado, setEstado] = useState("")
+
 
   const handleGetNote = async () => {
-    try{
+    try {
       const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/notes/${note.id}`)
       const data = await response.json()
       setTitle(data.title)
@@ -19,64 +23,46 @@ export const NoteCard = ({note}) => {
     }
   }
 
-  const handleEditNote = () => {
-    const titleInput = document.querySelector('.card-header h2')
-    const bodyInput = document.querySelector('.card-content p')
-    const saveButton = document.querySelector('.editButtons')
-    const editButton = document.querySelector('.pen-button')
+  const toggleEditButton = () => {
 
-    if (saveButton) {
-      saveButton.style.display = 'block'
-    }
-    if (editButton) {
-      editButton.style.display = 'none'
-    }
+    if (estado === "") {
+      setToggle({ display: 'block' });
+      setToggleUSer({ display: 'none' });
 
-    titleInput.contentEditable = true
-    bodyInput.contentEditable = true
+      setEstado("active")
+    } else {
+      setToggle({ display: 'none' });
+      setToggleUSer({ display: 'block' });
+      setEstado("")
+    }
   }
-
-  const handleCloseEdit = () => {
-    const titleInput = document.querySelector('.card-header h2')
-    const bodyInput = document.querySelector('.card-content p')
-    const saveButton = document.querySelector('.editButtons')
-    const editButton = document.querySelector('.pen-button')
-
-    if (saveButton) {
-      saveButton.style.display = 'none'
-    }
-    if (editButton) {
-      editButton.style.display = 'block'
-    }
-
-    titleInput.contentEditable = false
-    bodyInput.contentEditable = false
-  }
-
-  const handleChangeNote = async (id) => {
-      const note = {
-        title: title,
-        body: body
-      };
-      try {
-        const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/notes/${id}`, {
-          method: 'PUT',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(note)
-        });
-        if (response.ok) {
-          console.log('Note updated successfully');
-        } else {
-          console.error('Error updating note');
-        }
-      } catch (error) {
-        console.error('Error updating note:', error);
-      }
-    }
 
   
+
+  const handleChangeNote = async (id) => {
+    const note = {
+      title: title,
+      body: body
+    };
+    try {
+      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/notes/${id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(note)
+      });
+      if (response.ok) {
+        console.log('Note updated successfully');
+      } else {
+        console.error('Error updating note');
+      }
+    } catch (error) {
+      console.error('Error updating note:', error);
+    }
+  }
+
+
 
   useEffect(() => {
     handleGetNote()
@@ -85,21 +71,23 @@ export const NoteCard = ({note}) => {
   return (
     <div className='wrapper'>
       <div className='card-header'>
-        <h2>{title}</h2>
+        <h2 style={toggleUser}>{title}</h2>
+        <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} style={toggle} />
       </div>
       <div className='card-content'>
-        <p>{body}</p>
+        <p style={toggleUser}>{body}</p>
+        <textarea value={body} onChange={(e) => setBody(e.target.value)} style={toggle} />
       </div>
       <div className='card-footer'>
         <div>
           <p>Fecha: {date}</p>
         </div>
         <div>
-          <button className='pen-button'><i className="fa-solid fa-pen" onClick={handleEditNote}/></button>
-          <div className='editButtons' style={{display: 'none'}}>
-            <button onClick={() => handleChangeNote(1)}><i className="fa-solid fa-floppy-disk"/></button>
-            <button><i className="fa-solid fa-trash"/></button>
-            <button onClick={handleCloseEdit}><i className="fa-solid fa-xmark"/></button>
+          <button className='pen-button' style={toggleUser}><i className="fa-solid fa-pen" onClick={toggleEditButton} /></button>
+          <div className='editButtons' style={toggle}>
+            <button onClick={() => handleChangeNote(1)}><i className="fa-solid fa-floppy-disk" /></button>
+            <button><i className="fa-solid fa-trash" /></button>
+            <button onClick={toggleEditButton}><i className="fa-solid fa-xmark" /></button>
           </div>
         </div>
       </div>

@@ -16,6 +16,18 @@ export const Notes = () => {
             console.error('Error fetching notes:', error)
         }
     }
+
+    const handleNewNote = () => {
+        const newNote = document.querySelector('.notes-container NoteCardCreation')
+        const newNoteButton = document.querySelector('.notes-container NewNote')
+
+        if (newNote) {
+            newNote.style.display = 'none'
+        }
+        if (newNoteButton) {
+            newNoteButton.style.display = 'block'
+        }   
+    }
     useEffect(() => {
         handleGetNotes()
     }, [])
@@ -29,8 +41,7 @@ export const Notes = () => {
                 <NoteCard key={note.id} note={note} />
             ))}
             <NoteCardCreation />
-            <NewNote/>
-            
+            <NewNote handleNewNote={handleNewNote}/>
         </div>
     </div>
   )
