@@ -11,9 +11,34 @@
         align-items: center;
         margin: 1rem;
         border-bottom: 1px solid grey;
+        input {
+        text-decoration: none;
+        background-color: transparent;
+        font-size: 2rem;
+        font-weight: 500;
+        width: 100%;
+        border: 0px;
+        color: grey;
+      }
+        input:focus {
+            outline: none;
+            font-size: 2rem;
+            font-weight: 500;
+        }
     }
     .card-content{
         min-height: 5em;
+        padding: 1rem;
+        textarea {
+        text-decoration: none;
+        background-color: transparent;
+        width: 100%;
+        border: 0px;
+        color: grey;
+      }
+      textarea:focus {
+        outline: none;
+      }
     }
     .card-footer{
         display: flex;
