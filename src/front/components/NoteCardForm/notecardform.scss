@@ -1,5 +1,4 @@
 .wrapper-form {
-  background-color: #6340bc;
   color: rgb(189, 188, 188);
   display: flex;
   flex-direction: column;
@@ -54,12 +53,37 @@
       justify-content: space-between;
       justify-self: end;
       margin: 0 1rem;
+      .card-footer-buttons {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 0rem;
+     
       button {
         background-color: black;
         color: white;
         border-radius: 50px;
+        margin: 2px;
         border: 5px solid black;
       }
+      .color-palette{
+        display: flex;
+        justify-content: space-between;
+      
+      .color-blue {
+        background-color: #176294;
+        border: 1px solid white;
+      }
+      .color-purple{
+        background-color: #6340bc;
+        border: 1px solid white;
+      }
+      .color-green{
+        background-color: #40bc72;
+        border: 1px solid white;
+      }
+      }
+       }
     }
   }
 }
