@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react'
 import './notecard.scss'
 
 export const NoteCard = ({ note }) => {
-  const [title, setTitle] = useState('')
-  const [body, setBody] = useState('')
-  const [date, setDate] = useState('')
+  const [title, setTitle] = useState(note.title ||'')
+  const [body, setBody] = useState(note.body ||'')
+  const [date, setDate] = useState(note.date || '')
   const [toggle, setToggle] = useState({ display: 'none' })
   const [toggleUser, setToggleUSer] = useState({ display: 'block' })
   const [estado, setEstado] = useState("")
@@ -36,6 +36,20 @@ export const NoteCard = ({ note }) => {
       setEstado("")
     }
   }
+  const handleDeleteNote = async (id) => {
+    try {
+      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/notes/${id}`, {
+        method: 'DELETE'
+      });
+      if (response.ok) {
+        console.log('Note deleted successfully');
+      } else {
+        console.error('Error deleting note');
+      }
+    } catch (error) {
+      console.error('Error deleting note:', error);
+    }
+  }
 
   
 
@@ -65,7 +79,13 @@ export const NoteCard = ({ note }) => {
 
 
   useEffect(() => {
+    if(note.id){
     handleGetNote()
+    } else {
+      setTitle(note.title || ``)
+      setBody(note.body || ``)
+      setDate(note.date || ``)
+    }
   }, [])
 
   return (
@@ -85,8 +105,8 @@ export const NoteCard = ({ note }) => {
         <div>
           <button className='pen-button' style={toggleUser}><i className="fa-solid fa-pen" onClick={toggleEditButton} /></button>
           <div className='editButtons' style={toggle}>
-            <button onClick={() => handleChangeNote(1)}><i className="fa-solid fa-floppy-disk" /></button>
-            <button><i className="fa-solid fa-trash" /></button>
+            <button onClick={() => handleChangeNote(note.id)}><i className="fa-solid fa-floppy-disk" /></button>
+            <button onClick={() => handleDeleteNote(note.id)}><i className="fa-solid fa-trash" /></button>
             <button onClick={toggleEditButton}><i className="fa-solid fa-xmark" /></button>
           </div>
         </div>

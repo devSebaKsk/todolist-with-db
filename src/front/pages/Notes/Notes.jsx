@@ -7,6 +7,14 @@ import { NewNote } from '../../components/NewNote/NewNote'
 export const Notes = () => {
     const [notes, setNotes] = useState([])
 
+    const addNote = (note) => {
+        setNotes([note, ...notes])
+    }
+
+    const [toggle, setToggle] = useState({ display: 'none' })
+    const [toggleUser, setToggleUSer] = useState({ display: 'block' })
+    const [estado, setEstado] = useState("")
+
     const handleGetNotes = async () => {
         try {
             const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/notes`)
@@ -17,17 +25,19 @@ export const Notes = () => {
         }
     }
 
-    const handleNewNote = () => {
-        const newNote = document.querySelector('.notes-container NoteCardCreation')
-        const newNoteButton = document.querySelector('.notes-container NewNote')
+    const toggleNewNote = () => {
 
-        if (newNote) {
-            newNote.style.display = 'none'
-        }
-        if (newNoteButton) {
-            newNoteButton.style.display = 'block'
-        }   
+    if (estado === "") {
+      setToggle({ display: 'block' });
+      setToggleUSer({ display: 'none' });
+
+      setEstado("active")
+    } else {
+      setToggle({ display: 'none' });
+      setToggleUSer({ display: 'block' });
+      setEstado("")
     }
+  }
     useEffect(() => {
         handleGetNotes()
     }, [])
@@ -39,8 +49,10 @@ export const Notes = () => {
             {notes.map((note) => (
                 <NoteCard key={note.id} note={note} />
             ))}
-            <NoteCardCreation />
-            <NewNote handleNewNote={handleNewNote}/>
+            <div style={toggle} >
+            <NoteCardCreation addNote={addNote} toggleNewNote={toggleNewNote}/>
+            </div>
+            <NewNote style={toggleUser} toggleNewNote={toggleNewNote}/>
         </div>
     </div>
   )

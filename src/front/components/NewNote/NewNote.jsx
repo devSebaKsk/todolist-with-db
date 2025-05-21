@@ -8,7 +8,7 @@ export const NewNote = (props) => {
         <div className='newnote-container'>
             <div className='newnote'>
             <h2>New Note</h2>
-            <button onClick={props.handleNewNote} ><i class="fa-solid fa-plus fa-2xl"></i></button>
+            <button onClick={props.toggleNewNote} ><i className="fa-solid fa-plus fa-2xl"></i></button>
             </div>
         </div>
     </div>

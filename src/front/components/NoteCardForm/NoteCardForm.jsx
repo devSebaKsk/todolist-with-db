@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import './notecardform.scss'
 
-export const NoteCardCreation = () => {
+export const NoteCardCreation = (props) => {
   const [title, setTitle] = useState("")
   const [body, setBody] = useState("")
   const date = new Date().toLocaleDateString();
@@ -20,7 +20,12 @@ export const NoteCardCreation = () => {
           body: JSON.stringify(note)
         });
         if (response.ok) {
+          const newNote = await response.json()
           console.log('Note created successfully');
+          props.addNote(newNote)
+          setTitle("")
+          setBody("")
+          props.toggleNewNote()
         } else {
           console.error('Error creating note');
         }
