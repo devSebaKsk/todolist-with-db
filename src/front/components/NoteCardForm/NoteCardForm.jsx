@@ -40,7 +40,7 @@ export const NoteCardCreation = (props) => {
 
 
   return (
-    <div className='wrapper'>
+    <div className='wrapper-form'>
       <form>
       <div className='card-header'>
         <h1><input placeholder='Title' onChange={(e)=>{

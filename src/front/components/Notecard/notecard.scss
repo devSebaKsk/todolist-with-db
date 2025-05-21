@@ -1,5 +1,6 @@
 .wrapper{
-    background-color: rgb(255, 255, 94);
+    background-color: #652feb;
+    color: white;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -48,7 +49,9 @@
         button{
             background-color: black;
             color: white;
+            border: 5px solid black;
             border-radius: 50px;
+
         }
     }
 }
