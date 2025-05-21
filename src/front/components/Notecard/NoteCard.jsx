@@ -10,13 +10,23 @@ export const NoteCard = ({ note }) => {
   const [estado, setEstado] = useState("")
 
 
+  const formatDate = (dateString) => {
+  if (!dateString) return '';
+  const dateObj = new Date(dateString);
+  const day = String(dateObj.getDate()).padStart(2, '0');
+  const month = String(dateObj.getMonth() + 1).padStart(2, '0');
+  const year = dateObj.getFullYear();
+  return `${day}/${month}/${year}`;
+};
+
+
   const handleGetNote = async () => {
     try {
       const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/notes/${note.id}`)
       const data = await response.json()
       setTitle(data.title)
       setBody(data.body)
-      setDate(data.date)
+      setDate(formatDate(data.create_at))
     }
     catch (error) {
       console.error('Error fetching note:', error)

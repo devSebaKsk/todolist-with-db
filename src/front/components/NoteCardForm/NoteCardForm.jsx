@@ -26,6 +26,7 @@ export const NoteCardCreation = (props) => {
           setTitle("")
           setBody("")
           props.toggleNewNote()
+          window.location.reload()
         } else {
           console.error('Error creating note');
         }

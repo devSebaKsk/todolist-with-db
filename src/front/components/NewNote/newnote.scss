@@ -1,5 +1,6 @@
 .wrapper-newnote{
-    background-color: rgb(210, 210, 210);
+    background-color: transparent;
+    border: 1px solid #cfcfcf;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -9,7 +10,7 @@
     border-radius: 10px;
     .newnote{
         h2{
-            color: grey;
+            color: #cfcfcf;
             margin-bottom: 2rem;
         }
         button{
@@ -17,7 +18,7 @@
         font-size: large;
         background-color: transparent;
         border: none;
-        color: black;
+        color: #cfcfcf;
         cursor: pointer;
         }
     }
