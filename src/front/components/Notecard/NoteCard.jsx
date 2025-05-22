@@ -12,7 +12,7 @@ export const NoteCard = ({ note }) => {
 
   const formatDate = (dateString) => {
   if (!dateString) return '';
-  const dateObj = new Date(dateString);
+  const dateObj = new Date(dateString );
   const day = String(dateObj.getDate()+1).padStart(2, '0');
   const month = String(dateObj.getMonth() + 1).padStart(2, '0');
   const year = dateObj.getFullYear();
