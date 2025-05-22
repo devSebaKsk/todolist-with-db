@@ -1,5 +1,7 @@
 import React, { useState } from 'react'
 import './notecardform.scss'
+import {  toast } from 'react-toastify';
+
 
 export const NoteCardCreation = (props) => {
   const [title, setTitle] = useState("")
@@ -46,6 +48,7 @@ export const NoteCardCreation = (props) => {
       if (response.ok) {
         const newNote = await response.json()
         console.log('Note created successfully');
+        toast('Note created successfully');
         props.addNote(newNote)
         setTitle("")
         setBody("")
@@ -53,9 +56,11 @@ export const NoteCardCreation = (props) => {
         window.location.reload()
       } else {
         console.error('Error creating note');
+        toast.error('Error creating note');
       }
     } catch (error) {
       console.error('Error creating note:', error);
+      toast.error('Error creating note',error);
     }
   }
 
@@ -66,6 +71,7 @@ export const NoteCardCreation = (props) => {
 
   return (
     <div className='wrapper-form' style={color}>
+      
       <form>
         <div className='card-header'>
           <h1><input placeholder='Title' onChange={(e) => {

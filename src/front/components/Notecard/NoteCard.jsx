@@ -31,6 +31,7 @@ export const NoteCard = ({ note }) => {
       setColor({ backgroundColor: data.color })
     }
     catch (error) {
+      toast.error('Error fetching note')
       console.error('Error fetching note:', error)
     }
   }
@@ -55,11 +56,14 @@ export const NoteCard = ({ note }) => {
       });
       if (response.ok) {
         console.log('Note deleted successfully');
+        toast.success('Note deleted successfully');
       } else {
         console.error('Error deleting note');
+        toast.error('Error deleting note');
       }
     } catch (error) {
       console.error('Error deleting note:', error);
+      toast.error('Error deleting note',error);
     }
   }
 

@@ -3,6 +3,7 @@ import {NoteCard} from '../../components/Notecard/NoteCard'
 import {NoteCardCreation} from '../../components/NoteCardForm/NoteCardForm'
 import './notes.scss'
 import { NewNote } from '../../components/NewNote/NewNote'
+import { ToastContainer, toast } from 'react-toastify';
 
 export const Notes = () => {
     const [notes, setNotes] = useState([])
@@ -22,6 +23,7 @@ export const Notes = () => {
             setNotes(data)
         } catch (error) {
             console.error('Error fetching notes:', error)
+            toast.error('Error fetching notes', error)
         }
     }
 
@@ -54,6 +56,7 @@ export const Notes = () => {
             </div>
             <NewNote style={toggleUser} toggleNewNote={toggleNewNote}/>
         </div>
+        <ToastContainer />
     </div>
   )
 }
