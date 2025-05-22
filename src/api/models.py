@@ -26,9 +26,8 @@ class Note(db.Model):
     status: Mapped[bool] = mapped_column(Boolean(),nullable=False, default=True)
     color: Mapped[str] = mapped_column(String(20), nullable=False)
     date: Mapped[datetime] = mapped_column(DateTime, default=datetime.now(timezone.utc), nullable=False)
-    user_id: Mapped[int] = mapped_column(ForeignKey("user.id"), nullable=False)
 
-    user: Mapped["User"] = relationship(back_populates="notes")
+    
 
 
     def serialize(self):
