@@ -24,7 +24,12 @@ class Note(db.Model):
     title: Mapped[str] = mapped_column(String(120), nullable=False)
     body: Mapped[str] = mapped_column(String(240), nullable=False)
     status: Mapped[bool] = mapped_column(Boolean(),nullable=False, default=True)
-    create_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.now(timezone.utc), nullable=False)
+    color: Mapped[str] = mapped_column(String(20), nullable=False)
+    date: Mapped[datetime] = mapped_column(DateTime, default=datetime.now(timezone.utc), nullable=False)
+    user_id: Mapped[int] = mapped_column(ForeignKey("user.id"), nullable=False)
+
+    user: Mapped["User"] = relationship(back_populates="notes")
+
 
     def serialize(self):
         return{
@@ -32,5 +37,7 @@ class Note(db.Model):
             "title":self.title,
             "body":self.body,
             "status":self.status,
-            "create_at":self.create_at
+            "date":self.date,
+            "color":self.color,
+            "user_id":self.user_id
         }
