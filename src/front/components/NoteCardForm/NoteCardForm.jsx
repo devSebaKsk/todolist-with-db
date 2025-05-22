@@ -32,7 +32,8 @@ export const NoteCardCreation = (props) => {
     const note = {
       title: title,
       body: body,
-      date: date
+      date: date,
+      color: color.backgroundColor
     };
     try {
       const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/notes`, {

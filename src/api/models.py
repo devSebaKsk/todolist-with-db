@@ -37,6 +37,5 @@ class Note(db.Model):
             "body":self.body,
             "status":self.status,
             "date":self.date,
-            "color":self.color,
-            "user_id":self.user_id
+            "color":self.color
         }

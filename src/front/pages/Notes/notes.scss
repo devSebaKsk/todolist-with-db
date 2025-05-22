@@ -1,3 +1,6 @@
+.main-container {
+  height: 100vh;
+
 .notes-container {
   padding-left: 3rem;
   padding-top: 3rem;
@@ -5,4 +8,5 @@
   display: flex;
   flex-wrap: wrap;
   gap: 1rem;
+}
 }

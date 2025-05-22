@@ -4,6 +4,7 @@ import './notecard.scss'
 export const NoteCard = ({ note }) => {
   const [title, setTitle] = useState(note.title ||'')
   const [body, setBody] = useState(note.body ||'')
+  const [color, setColor] = useState({ backgroundColor: note.color || '#652feb' })
   const [date, setDate] = useState(note.date || '')
   const [toggle, setToggle] = useState({ display: 'none' })
   const [toggleUser, setToggleUSer] = useState({ display: 'block' })
@@ -26,7 +27,8 @@ export const NoteCard = ({ note }) => {
       const data = await response.json()
       setTitle(data.title)
       setBody(data.body)
-      setDate(formatDate(data.create_at))
+      setDate(formatDate(data.date))
+      setColor({ backgroundColor: data.color })
     }
     catch (error) {
       console.error('Error fetching note:', error)
@@ -95,11 +97,12 @@ export const NoteCard = ({ note }) => {
       setTitle(note.title || ``)
       setBody(note.body || ``)
       setDate(note.date || ``)
+      setColor({ backgroundColor: note.color || '#652feb' })
     }
   }, [])
 
   return (
-    <div className='wrapper'>
+    <div className='wrapper' style={color}>
       <div className='card-header'>
         <h2 style={toggleUser}>{title}</h2>
         <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} style={toggle} />

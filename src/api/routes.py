@@ -54,7 +54,8 @@ def handle_post_note():
     note = Note(
         title=data.get("title"),
         body=data.get("body"),
-        create_at=data.get("date"),
+        date=data.get("date"),
+        color=data.get("color"),
         )
     db.session.add(note)
     db.session.commit()
