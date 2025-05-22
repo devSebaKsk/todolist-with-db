@@ -24,18 +24,19 @@
         width: 100%;
         border: 0px;
       }
-        input:focus {
-            outline: none;
-        }
-        input::placeholder {
-          color: rgb(205, 118, 243);
-        }
+      input:focus {
+        outline: none;
+      }
+      input::placeholder {
+        color: rgb(205, 118, 243);
+      }
     }
     .card-content {
       min-height: 5em;
       textarea {
         text-decoration: none;
         background-color: transparent;
+        resize: none;
         color: white;
         width: 100%;
         border: 0px;
@@ -53,37 +54,47 @@
       justify-content: space-between;
       justify-self: end;
       margin: 0 1rem;
+      input {
+        text-decoration: none;
+        color: white;
+        background-color: transparent;
+        border: 1px solid white;
+        border-radius: 5px;
+      }
+      ::-webkit-calendar-picker-indicator {
+        filter: invert(1);
+      }
       .card-footer-buttons {
         display: flex;
         justify-content: space-between;
         align-items: center;
         margin-top: 0rem;
-     
-      button {
-        background-color: black;
-        color: white;
-        border-radius: 50px;
-        margin: 2px;
-        border: 5px solid black;
+
+        button {
+          background-color: black;
+          color: white;
+          border-radius: 50px;
+          margin: 2px;
+          border: 5px solid black;
+        }
+        .color-palette {
+          display: flex;
+          justify-content: space-between;
+
+          .color-blue {
+            background-color: #176294;
+            border: 1px solid white;
+          }
+          .color-purple {
+            background-color: #652feb;
+            border: 1px solid white;
+          }
+          .color-green {
+            background-color: #40bc72;
+            border: 1px solid white;
+          }
+        }
       }
-      .color-palette{
-        display: flex;
-        justify-content: space-between;
-      
-      .color-blue {
-        background-color: #176294;
-        border: 1px solid white;
-      }
-      .color-purple{
-        background-color: #6340bc;
-        border: 1px solid white;
-      }
-      .color-green{
-        background-color: #40bc72;
-        border: 1px solid white;
-      }
-      }
-       }
     }
   }
 }

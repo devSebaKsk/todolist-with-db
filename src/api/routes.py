@@ -53,7 +53,8 @@ def handle_post_note():
     data = request.get_json(silent=True)
     note = Note(
         title=data.get("title"),
-        body=data.get("body")
+        body=data.get("body"),
+        create_at=data.get("date"),
         )
     db.session.add(note)
     db.session.commit()

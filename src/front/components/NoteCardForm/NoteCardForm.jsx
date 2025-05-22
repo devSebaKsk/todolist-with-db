@@ -4,18 +4,16 @@ import './notecardform.scss'
 export const NoteCardCreation = (props) => {
   const [title, setTitle] = useState("")
   const [body, setBody] = useState("")
-  const date = new Date().toLocaleDateString();
+  const [date, setDate] = useState("")
 
   const [toggle, setToggle] = useState({ display: 'none' })
   const [toggleUser, setToggleUSer] = useState({ display: 'block' })
   const [estado, setEstado] = useState("")
 
-  const [color, setColor] = useState({backgroundColor: '#6340bc'})
+  const [color, setColor] = useState({backgroundColor: '#652feb'})
 
 
-  const handleColor = (color) => {
-    setColor(color)
-  }
+
   const toggleColor = () => {
 
     if (estado === "") {
@@ -33,7 +31,8 @@ export const NoteCardCreation = (props) => {
   const handleCreateNote = async () => {
     const note = {
       title: title,
-      body: body
+      body: body,
+      date: date
     };
     try {
       const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/notes`, {
@@ -80,13 +79,13 @@ export const NoteCardCreation = (props) => {
         </div>
         <div className='card-footer'>
           <div>
-            <p>Fecha: {date}</p>
+            <p>Fecha: <input type="date" onChange={(e) => setDate(e.target.value)} /></p>
           </div>
           <div className='card-footer-buttons'>
             <button type="button" style={toggleUser} onClick={toggleColor}><i className="fa-solid fa-palette" /></button>
             <div style={toggle} className='color-palette'>
               <button type="button" onClick={()=> (setColor({ backgroundColor: '#176294' }), toggleColor())} className='color-blue'><i className="fa-solid fa-droplet"></i></button>
-              <button type="button" onClick={()=> (setColor({ backgroundColor: '#6340bc' }), toggleColor())} className='color-purple'><i className="fa-solid fa-droplet"></i></button>
+              <button type="button" onClick={()=> (setColor({ backgroundColor: '#652feb' }), toggleColor())} className='color-purple'><i className="fa-solid fa-droplet"></i></button>
               <button type="button" onClick={()=> (setColor({ backgroundColor: '#40bc72' }), toggleColor())} className='color-green'><i className="fa-solid fa-droplet"></i></button>
             </div>
             <button type="button" onClick={handleCreateNote}><i className="fa-solid fa-plus" /></button>
