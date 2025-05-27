@@ -6,7 +6,7 @@ from flask import Flask, request, jsonify, url_for, send_from_directory
 from flask_migrate import Migrate
 from flask_swagger import swagger
 from api.utils import APIException, generate_sitemap
-from api.models import db
+from api.models import db, User, Note
 from api.routes import api
 from api.admin import setup_admin
 from api.commands import setup_commands
@@ -70,3 +70,24 @@ def serve_any_other_file(path):
 if __name__ == '__main__':
     PORT = int(os.environ.get('PORT', 3001))
     app.run(host='0.0.0.0', port=PORT, debug=True)
+
+
+# Login
+
+
+@app.route('/login', methods=['POST'])
+def handle_login():
+    data = request.get_json(silent=True)
+    email = data.get("email")
+    password = data.get("password")
+
+    if not email or not password:
+        return jsonify({"msg": "Email and password are required"}), 400
+
+    user = User.query.filter_by(email=email).first()
+    if not user or user.password != password:
+        return jsonify({"msg": "Invalid credentials"}), 401
+
+    return jsonify(user.serialize()), 200
+
+

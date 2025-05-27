@@ -74,3 +74,6 @@ def handle_put_note(id):
     db.session.commit()
     return jsonify({"message": "Nota actualizada"}), 200
 
+
+    
+
