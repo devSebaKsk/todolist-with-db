@@ -49,6 +49,12 @@ app.register_blueprint(api, url_prefix='/api')
 
 # Handle/serialize errors like a JSON object
 
+@jwt.token_in_blocklist_loader
+def handle_revoked_token(jwt_header,jwt_payload):
+    jti = jwt_payload['jti']
+
+    token = db.session.execute(db.select(BlackListToken).filter_by(jti=jti)).scalar()
+    return token is not None
 
 @app.errorhandler(APIException)
 def handle_invalid_usage(error):

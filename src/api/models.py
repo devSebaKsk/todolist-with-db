@@ -41,3 +41,9 @@ class Note(db.Model):
             "date":self.date,
             "color":self.color
         }
+
+
+class BlackListToken(db.Model):
+    id: Mapped[int] = mapped_column(primary_key=True)
+    jti: Mapped[str]= mapped_column(String(40), nullable=False, index=True)
+    created_at: Mapped[datetime] = mapped_column(DateTime, nullable=False)
