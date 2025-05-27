@@ -113,3 +113,10 @@ def handle_create_user():
 
     return jsonify(user.serialize()), 201
 
+# Logout
+@app.route('/logout', methods=['POST'])
+def handle_logout():
+    # In a real application, you would handle session management here
+    return jsonify({"msg": "Logged out successfully"}), 200
+
+
