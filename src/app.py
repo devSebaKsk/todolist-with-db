@@ -94,18 +94,23 @@ if __name__ == '__main__':
 # Login
 @app.route('/login', methods=['POST'])
 def handle_login():
-    data = request.get_json(silent=True)
-    email = data.get("email")
-    password = data.get("password")
+    try:
 
-    if not email or not password:
-        return jsonify({"msg": "Email and password are required"}), 400
+        data = request.get_json(silent=True)
+        user = db.session.execute(db.select(User).filter_by(email=data["email"])).scalar_one_or_none()
+        check = bcrypt.check_password_hash(user.password, data["password"])
+        print (check)
+        if not user or check != True:
+            return jsonify({"msg": "Credenciales incorrectas"}), 401
 
-    user = User.query.filter_by(email=email).first()
-    if not user or user.password != password:
-        return jsonify({"msg": "Invalid credentials"}), 401
-
-    return jsonify(user.serialize()), 200
+        access_token = create_access_token(identity=str(user.id))
+        
+        return jsonify({"ok":True, "msg": "Login exitoso", "access_token":access_token}),200
+    
+    except Exception as e:
+        print("Error: ", str(e))
+        db.session.rollback()
+        return jsonify({"ok": False, "msg":str(e)}),500
 
 
 #Register a new user
