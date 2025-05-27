@@ -72,9 +72,10 @@ if __name__ == '__main__':
     app.run(host='0.0.0.0', port=PORT, debug=True)
 
 
+
+# User management endpoints
+
 # Login
-
-
 @app.route('/login', methods=['POST'])
 def handle_login():
     data = request.get_json(silent=True)
@@ -90,4 +91,25 @@ def handle_login():
 
     return jsonify(user.serialize()), 200
 
+
+#Register a new user
+@app.route('/users', methods=['POST'])
+def handle_create_user():
+    data = request.get_json(silent=True)
+    email = data.get("email")
+    name = data.get("name")
+    password = data.get("password")
+
+    if not email or not name or not password:
+        return jsonify({"msg": "Email, name and password are required"}), 400
+
+    existing_user = User.query.filter_by(email=email).first()
+    if existing_user:
+        return jsonify({"msg": "User already exists"}), 409
+
+    user = User(email=email, name=name, password=password, is_active=True)
+    db.session.add(user)
+    db.session.commit()
+
+    return jsonify(user.serialize()), 201
 
