@@ -8,6 +8,7 @@ from flask_swagger import swagger
 from api.utils import APIException, generate_sitemap
 from api.models import db, User, Note, BlackListToken
 from api.routes import api
+from datetime import datetime, timezone
 from api.admin import setup_admin
 from api.commands import setup_commands
 from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt, get_jti, verify_jwt_in_request
@@ -131,9 +132,13 @@ def create_user():
     return jsonify({"message": "Usuario registrado"}), 201
 
 # Logout
-@app.route('/logout', methods=['POST'])
+@app.route('/logout', methods= ['POST'])
+@jwt_required()
 def handle_logout():
-    # In a real application, you would handle session management here
-    return jsonify({"msg": "Logged out successfully"}), 200
+    jti = get_jwt()['jti']
+    date = datetime.now(timezone.utc)
+    db.session.add(BlackListToken(jti=jti,created_at=date))
+    db.session.commit()
+    return jsonify(msg='JWT revoked'), 200
 
 
