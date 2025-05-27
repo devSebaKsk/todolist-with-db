@@ -6,7 +6,7 @@ from flask import Flask, request, jsonify, url_for, send_from_directory
 from flask_migrate import Migrate
 from flask_swagger import swagger
 from api.utils import APIException, generate_sitemap
-from api.models import db, User, Note
+from api.models import db, User, Note, BlackListToken
 from api.routes import api
 from api.admin import setup_admin
 from api.commands import setup_commands
@@ -21,6 +21,9 @@ ENV = "development" if os.getenv("FLASK_DEBUG") == "1" else "production"
 static_file_dir = os.path.join(os.path.dirname(
     os.path.realpath(__file__)), '../public/')
 app = Flask(__name__)
+
+bcrypt = Bcrypt(app)
+CORS(app)
 app.url_map.strict_slashes = False
 
 app.config["JWT_SECRET_KEY"] = "nuestra_clave_secreta"
@@ -106,25 +109,21 @@ def handle_login():
 
 
 #Register a new user
-@app.route('/users', methods=['POST'])
-def handle_create_user():
+@app.route("/users", methods=["POST"])
+def create_user():
+
     data = request.get_json(silent=True)
-    email = data.get("email")
-    name = data.get("name")
-    password = data.get("password")
+    if not data or not data.get("email") or not data.get("password"):
+        return jsonify({"error": "Datos inválidos"}), 400
 
-    if not email or not name or not password:
-        return jsonify({"msg": "Email, name and password are required"}), 400
-
-    existing_user = User.query.filter_by(email=email).first()
-    if existing_user:
-        return jsonify({"msg": "User already exists"}), 409
-
-    user = User(email=email, name=name, password=password, is_active=True)
+    if db.session.execute(db.select(User).filter_by(email=data["email"])).scalar_one_or_none():
+        return jsonify({"error": "Usuario ya existe"}), 409
+    pw_hash = bcrypt.generate_password_hash(data["password"]).decode('utf8')
+    user = User(name=data["name"], email=data["email"], password=pw_hash,
+        is_active=True)
     db.session.add(user)
     db.session.commit()
-
-    return jsonify(user.serialize()), 201
+    return jsonify({"message": "Usuario registrado"}), 201
 
 # Logout
 @app.route('/logout', methods=['POST'])
